@@ -43,7 +43,7 @@ public class DepartmentController {
 
     // 부서 id를 통한 부서 수정
     @PatchMapping("/{departmentId}")
-    public ResponseEntity<String> depratmentUpdate(
+    public ResponseEntity<String> departmentUpdate(
             @PathVariable("departmentId") Long departmentId,
             @RequestBody DepartmentUpdateRequestDto departmentUpdateRequestDto) {
         departmentService.departmentUpdate(departmentId, departmentUpdateRequestDto);

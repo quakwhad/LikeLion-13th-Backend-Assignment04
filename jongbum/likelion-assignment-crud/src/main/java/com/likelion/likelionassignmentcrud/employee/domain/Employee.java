@@ -1,6 +1,7 @@
 package com.likelion.likelionassignmentcrud.employee.domain;
 
 import com.likelion.likelionassignmentcrud.department.domain.Department;
+import com.likelion.likelionassignmentcrud.employee.api.dto.request.EmployeeUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,5 +34,12 @@ public class Employee {
         this.age = age;
         this.responsibilities = responsibilities;
         this.department = department;
+    }
+
+    // 업데이트하는 메서드
+    public void update(EmployeeUpdateRequestDto employeeUpdateRequestDto) {
+        this.name = employeeUpdateRequestDto.name();
+        this.age = employeeUpdateRequestDto.age();
+        this.responsibilities = employeeUpdateRequestDto.responsibilities();
     }
 }

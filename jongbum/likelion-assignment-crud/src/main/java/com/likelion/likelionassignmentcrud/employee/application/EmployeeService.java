@@ -3,6 +3,7 @@ package com.likelion.likelionassignmentcrud.employee.application;
 import com.likelion.likelionassignmentcrud.department.domain.Department;
 import com.likelion.likelionassignmentcrud.department.domain.repository.DepartmentRepository;
 import com.likelion.likelionassignmentcrud.employee.api.dto.request.EmployeeSaveRequestDto;
+import com.likelion.likelionassignmentcrud.employee.api.dto.request.EmployeeUpdateRequestDto;
 import com.likelion.likelionassignmentcrud.employee.api.dto.response.EmployeeInfoResponseDto;
 import com.likelion.likelionassignmentcrud.employee.api.dto.response.EmployeeListResponseDto;
 import com.likelion.likelionassignmentcrud.employee.domain.Employee;
@@ -45,5 +46,21 @@ public class EmployeeService {
                 .toList();
 
         return EmployeeListResponseDto.from(employeeInfoResponseDtos);
+    }
+
+    // 직원 수정
+    @Transactional
+    public void employeeUpdate(Long employeeId, EmployeeUpdateRequestDto employeeUpdateRequestDto) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(IllegalArgumentException::new);
+
+        employee.update(employeeUpdateRequestDto);
+    }
+
+    // 직원 삭제
+    @Transactional
+    public void employeeDelete(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(IllegalArgumentException::new);
+
+        employeeRepository.delete(employee);
     }
 }
