@@ -23,9 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor // final 필드에 대한 생성자 자동 생성
 public class CustomExceptionAdvice {
 
-    /**
-     * 500 Internal Server Error
-     */
+    // 500 Internal Server Error
     // 원인 모를 이유의 예외 발생 시
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
@@ -34,9 +32,7 @@ public class CustomExceptionAdvice {
         return ApiResTemplate.errorResponse(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
-    /**
-     * custom error
-     */
+    // custom error
     // 내부 커스텀 에러 처리하기
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResTemplate> handleCustomException(BusinessException e) {

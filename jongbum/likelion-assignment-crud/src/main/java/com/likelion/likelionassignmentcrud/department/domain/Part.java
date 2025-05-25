@@ -4,5 +4,6 @@ public enum Part {
     BACKEND,
     FRONTEND,
     PLANNING,
-    AI
+    AI;
 }
+

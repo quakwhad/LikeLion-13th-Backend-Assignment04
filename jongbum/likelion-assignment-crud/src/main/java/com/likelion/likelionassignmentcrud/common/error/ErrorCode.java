@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     
     // 404 NOT FOUND
-    DEPARTMENT_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 부서가 존재하지 않습니다", "NOT_FOUND_404"),
-    EMPLOYEE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 직원이 존재하지 않습니다", "NOT_FOUND_404"),
+    DEPARTMENT_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "부서는 존재하지 않습니다", "NOT_FOUND_404"),
+    EMPLOYEE_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "직원은 존재하지 않습니다", "NOT_FOUND_404"),
 
     // 400 BAD REQUEST
     VALIDATION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효성 검사에 실패했습니다.", "BAD_REQUEST_400"),

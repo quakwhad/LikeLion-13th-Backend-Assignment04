@@ -3,14 +3,12 @@ package com.likelion.likelionassignmentcrud.common.template;
 
 import com.likelion.likelionassignmentcrud.common.error.ErrorCode;
 import com.likelion.likelionassignmentcrud.common.error.SuccessCode;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)   // 모든 필드 값을 매개변수로 받는 생성자 자동 생성
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)  // 초기화되지 않는 final이나 @NonNull 값을 매개변수로 받는 생성자 자동 생성
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)  // 초기화되지 않는 final 붙은 필드만 매개변수로 받는 생성자 자동 생성
+@Builder
 // @JsonInclude(JsonInclude.Include.NON_NULL) // NULL 값은 무시
 public class ApiResTemplate<T> {
     private final int code;         // 응답 코드
