@@ -11,13 +11,13 @@ import com.likelion.likelionassignmentcrud.department.application.DepartmentServ
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.print.Pageable;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,13 +32,17 @@ public class DepartmentController {
         departmentService.departmentSave(departmentSaveRequestDto);
         return ApiResTemplate.successWithNoContent(SuccessCode.DEPARTMENT_SAVE_SUCCESS);
     }
-    
+
     // 부서 전체 조회
     @GetMapping("/all")
     public ApiResTemplate<DepartmentListResponseDto> departmentFindAll(
-            // @PageableDefault(size = 3, sort = "departmentId", direction = Sort.Direction.ASC)
-            Pageable pageable) {
-        DepartmentListResponseDto departmentListResponseDto = departmentService.departmentFindAll();
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "3") int size,
+            Pageable pageable
+    ) {
+        // page가 1부터 시작하도록 설정
+        Pageable customPageable = PageRequest.of(page - 1, pageable.getPageSize(), pageable.getSort());
+        DepartmentListResponseDto departmentListResponseDto = departmentService.departmentFindAll(customPageable);
 
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, departmentListResponseDto);
     }

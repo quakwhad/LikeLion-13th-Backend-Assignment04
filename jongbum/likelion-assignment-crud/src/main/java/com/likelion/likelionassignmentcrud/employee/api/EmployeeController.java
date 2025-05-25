@@ -9,6 +9,10 @@ import com.likelion.likelionassignmentcrud.employee.api.dto.response.EmployeeLis
 import com.likelion.likelionassignmentcrud.employee.application.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +33,15 @@ public class EmployeeController {
 
     // 부서 id를 기준으로 해당 부서의 직원 조회
     @GetMapping("/{departmentId}")
-    public ApiResTemplate<EmployeeListResponseDto> itsEmployeeFindAll(@PathVariable("departmentId") Long departmentId) {
-        EmployeeListResponseDto employeeListResponseDto = employeeService.employeeFindDepartment(departmentId);
+    public ApiResTemplate<EmployeeListResponseDto> itsEmployeeFindAll(
+            @PathVariable("departmentId") Long departmentId,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "3") int size,
+            Pageable pageable
+            ) {
+        // page가 1부터 시작하도록 설정
+        Pageable customPageable = PageRequest.of(page - 1, pageable.getPageSize(), pageable.getSort());
+        EmployeeListResponseDto employeeListResponseDto = employeeService.employeeFindDepartment(departmentId, customPageable);
         return ApiResTemplate.successResponse(SuccessCode.GET_SUCCESS, employeeListResponseDto);
     }
 

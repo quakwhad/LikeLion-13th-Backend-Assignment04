@@ -11,6 +11,8 @@ import com.likelion.likelionassignmentcrud.employee.api.dto.response.EmployeeLis
 import com.likelion.likelionassignmentcrud.employee.domain.Employee;
 import com.likelion.likelionassignmentcrud.employee.domain.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,6 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     // 직원 저장
-    // 내부 서버 오류 보여줄 방법?
     @Transactional
     public void employeeSave(EmployeeSaveRequestDto employeeSaveRequestDto) {
         Department department = departmentRepository.findById(employeeSaveRequestDto.departmentId()).orElseThrow(
@@ -43,14 +44,14 @@ public class EmployeeService {
     }
 
     // 특정 부서의 직원 목록 조회
-    public EmployeeListResponseDto employeeFindDepartment(Long departmentId) {
+    public EmployeeListResponseDto employeeFindDepartment(Long departmentId, Pageable pageable) {
         Department department = departmentRepository.findById(departmentId).orElseThrow(
                 // 조회하려고 하는 부서 id가 없을 때 발생하는 예외 처리
                 () -> new BusinessException(ErrorCode.DEPARTMENT_NOT_FOUND_EXCEPTION,
                         "id가 " + departmentId + "인 " + ErrorCode.DEPARTMENT_NOT_FOUND_EXCEPTION.getMessage())
         );
 
-        List<Employee> employees = employeeRepository.findByDepartment(department);
+        Page<Employee> employees = employeeRepository.findByDepartment(department, pageable);
         List<EmployeeInfoResponseDto> employeeInfoResponseDtos = employees.stream()
                 .map(EmployeeInfoResponseDto::from)
                 .toList();
